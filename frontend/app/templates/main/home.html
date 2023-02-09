@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+<div class="container mydiv">
+    <div class="row">
+        {% for product in productList %}
+        <div class="col-md-4">
+            <div class="card" style="width: 18rem;">
+                <img src="{{ url_for('static', filename='images/'+ product.image) }}" alt="{{ product.name }}" class="card-img-top">
+                <div class="card-body">
+                  <a href="/product/detail/{{product.id}}" class="" class="card-title">{{product.name}}</a>
+                  <p style="color: red"><strike>{{product.price | conv_curr}}</strike></p>
+                  <h5 style="color: green">{{(product.price - (product.price * product.discount)/100)  | conv_curr}}</h5>
+                  <button class="btn btn-primary addToCart" data-id="{{product.id}}">Thêm vào giỏ hàng</button>
+                </div>
+              </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

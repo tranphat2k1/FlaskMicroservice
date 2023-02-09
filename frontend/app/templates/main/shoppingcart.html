@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+<div class="container-xl">
+	<form action="{{ url_for('main.orderInfo') }}" method="post">
+	<div class="table-responsive">
+		<div class="table-wrapper">
+			<div class="table-title">
+				<div class="row">
+					<div class="col-sm-6">
+						<h2><b>Giỏ hàng</b></h2>
+					</div>
+					<div class="col-sm-6">
+						<button class="btn btn-success" value="Đặt hàng">Đặt hàng</button>
+					</div>
+				</div>
+			</div>
+			<table class="table table-striped table-hover">
+				<thead>
+					<tr>
+						<th>
+							<span class="custom-checkbox">
+								<input type="checkbox" id="selectAll">
+								<label for="selectAll"></label>
+							</span>
+						</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Giá</th>
+                        <th>Số lượng</th>
+						<th>Tổng</th>
+						<th>Thao tác</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for item in itemList %}
+					<tr>
+						<td>
+							<span class="custom-checkbox">
+								<input type="checkbox" id="select" name="item" value="{{ item.item_id }}">
+								<label for="selectOne"></label>
+							</span>
+						</td>
+                        <td>{{ item.name }}</td>
+						<td>
+                            <strike>{{ item.price | conv_curr }}</strike>
+                            <br>
+                            {{(item.price - (item.price*item.discount)/100) | conv_curr }}
+
+                        </td>
+                        <td>{{ item.quantity }}</td>
+						<td>{{ ((item.price - (item.price*item.discount)/100) * item.quantity) | conv_curr }}</td>
+						<td>
+							<a href="/shoppingcart/delete/{{ item.item_id }}" class="delete"><i class="material-icons" title="Delete">&#xE872;</i></a>
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+	</form>
+</div>
+<script>
+	$(document).ready(function(){
+		var checkbox = $('table tbody input[type="checkbox"]');
+		$("#selectAll").click(function(){
+		if(this.checked){
+			checkbox.each(function(){
+			this.checked = true;
+			});
+		} else{
+			checkbox.each(function(){
+			this.checked = false;
+			});
+		}
+		});
+		checkbox.click(function(){
+		if(!this.checked){
+			$("#selectAll").prop("checked", false);
+		}
+		});
+	});
+</script>
+{% endblock %}

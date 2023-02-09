@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% from 'bootstrap4/form.html' import render_form %}
+
+{% block page_content %}
+<div id="login-form-wrap">
+    <div id="login-form">
+        <h1>Đăng nhập</h1>
+        {% include '_messages.html' %}
+        {{ render_form(form) }}
+        <a href="{{ url_for('auth.forgotpassword') }}">Quên mật khẩu</a>
+    </div>
+</div>
+{% endblock %}
+

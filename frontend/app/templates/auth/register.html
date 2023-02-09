@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% from 'bootstrap4/form.html' import render_form %}
+
+{% block page_content %}
+<div id="login-form-wrap">
+    <div id="login-form">
+        <h1>Đăng ký</h1>
+        {% include '_messages.html' %}
+        {{ render_form(form) }}
+    </div>
+</div>
+{% endblock %}
+

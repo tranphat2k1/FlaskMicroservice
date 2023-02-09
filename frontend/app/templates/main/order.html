@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+<div class="container-xl">
+    <form action="{{ url_for('main.order') }}" method="post">
+        <div class="modal-body">
+            <h5>Thông tin khách hàng</h5>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Tên khách hàng</label>
+                        <input type="text" class="form-control" name="name" value="{{ info.fullname }}" onkeydown="return false;" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Số điện thoại</label>
+                        <input type="text" class="form-control" name="phone" value="{{ info.phone_number }}" onkeydown="return false;" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Địa chỉ Email</label>
+                        <input type="email" class="form-control" name="name" value="{{ info.email }}" onkeydown="return false;" required>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <h5>Địa chỉ giao hàng</h5>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Thành phố</label>
+                        <input type="text" class="form-control" name="city" value="{{ address.city }}" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Quận</label>
+                        <input type="text" class="form-control" name="district" value="{{ address.district }}" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Phường</label>
+                        <input type="text" class="form-control" name="ward" value="{{ address.ward }}" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Số nhà + đường</label>
+                        <input type="text" class="form-control" name="road" value="{{ address.road }}" required>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <h5>Danh sách mặt hàng</h5>
+            <div class="table-responsive">
+                <div class="table-wrapper">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Tên sản phẩm</th>
+                                <th>Giá</th>
+                                <th>Số lượng</th>
+                                <th>Tổng</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in itemList %}
+                            <tr>
+                                <input type="hidden" value="{{item.item_id}}" name="item_id">
+                                <input type="hidden" value="{{item.product_id}}" name="product_id">
+                                <input type="hidden" value="{{item.quantity}}" name="quantity">
+                                <td></td>
+                                <td>{{ item.name }}</td>
+                                <td>
+                                    <strike>{{ item.price | conv_curr }}</strike>
+                                    <br>
+                                    {{(item.price - (item.price*item.discount)/100) | conv_curr }}
+
+                                </td>
+                                <td>{{ item.quantity }}</td>
+                                <td>{{ item.final_price | conv_curr }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        <div class="col-md-9"></div>
+                        <div class="col-md-3"><b>Tổng tiền cần trả: {{ total | conv_curr }}</b></div>
+                    </div>
+                </div>
+        </div>
+        </div>
+        <div class="modal-footer">
+            <input type="submit" class="btn btn-success" value="Đặt hàng">
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+
+<div class="container">
+    <h2>Lịch sử giao dịch</h2>
+    <hr>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Ngày giao dịch</th>
+                <th>Sinh viên được đóng</th>
+                <th>MSSV</th>
+                <th>Số tiền</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for tran in transaction %}
+            <tr>
+                <td>{{tran.create_at}}</td>
+                <td>{{tran.fullname}}</td>
+                <td>{{tran.studentID}}</td>
+                <td>{{tran.amount|conv_curr}}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+</div>
+
+{% endblock %}

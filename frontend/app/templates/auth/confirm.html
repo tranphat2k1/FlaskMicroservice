@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% from 'bootstrap4/form.html' import render_form %}
+
+{% block page_content %}
+<div id="confirm-form-wrap">
+    <div id="confirm-form">
+        <h2>Xác nhận giao dịch</h2>
+        {% include '_messages.html' %}
+        {{ render_form(form) }}
+        {% if session.newOTP %}
+        <a href="/auth/newOTP">Lấy mã OTP khác</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
